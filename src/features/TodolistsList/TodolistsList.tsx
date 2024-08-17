@@ -13,7 +13,6 @@ import {
   addTaskTC,
   removeTaskTC,
   selectTasks,
-  TasksState,
   updateTaskTC,
 } from './tasks-reducer'
 import { TaskStatuses } from 'api/todolists-api'
