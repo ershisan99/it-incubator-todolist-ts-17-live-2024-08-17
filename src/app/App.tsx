@@ -3,7 +3,6 @@ import './App.css'
 import { TodolistsList } from 'features/TodolistsList/TodolistsList'
 import { ErrorSnackbar } from 'components/ErrorSnackbar/ErrorSnackbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppRootState } from './store'
 import {
   initializeAppTC,
   selectAppInitialized,
@@ -11,7 +10,7 @@ import {
 } from './app-reducer'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Login } from 'features/Login/Login'
-import { logoutTC } from 'features/Login/auth-reducer'
+import { logoutTC, selectIsLoggedIn } from 'features/Login/auth-reducer'
 import {
   AppBar,
   Button,
@@ -31,9 +30,7 @@ type Props = {
 function App({ demo = false }: Props) {
   const status = useSelector(selectAppStatus)
   const isInitialized = useSelector(selectAppInitialized)
-  const isLoggedIn = useSelector<AppRootState, boolean>(
-    (state) => state.auth.isLoggedIn
-  )
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useDispatch<any>()
 
   useEffect(() => {

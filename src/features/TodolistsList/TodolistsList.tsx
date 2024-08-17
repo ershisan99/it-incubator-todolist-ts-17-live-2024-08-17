@@ -22,6 +22,7 @@ import { AddItemForm } from 'components/AddItemForm/AddItemForm'
 import { Todolist } from './Todolist/Todolist'
 import { Navigate } from 'react-router-dom'
 import { useAppDispatch } from 'hooks/useAppDispatch'
+import { selectIsLoggedIn } from 'features/Login/auth-reducer'
 
 type Props = {
   demo?: boolean
@@ -32,9 +33,7 @@ export const TodolistsList: React.FC<Props> = ({ demo = false }) => {
     (state) => state.todolists
   )
   const tasks = useSelector<AppRootState, TasksState>((state) => state.tasks)
-  const isLoggedIn = useSelector<AppRootState, boolean>(
-    (state) => state.auth.isLoggedIn
-  )
+  const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const dispatch = useAppDispatch()
 
