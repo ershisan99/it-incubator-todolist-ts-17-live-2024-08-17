@@ -8,7 +8,7 @@ import {
   fetchTodolistsTC,
   FilterValues,
   removeTodolistTC,
-  TodolistDomain,
+  selectTodolists,
 } from './todolists-reducer'
 import {
   addTaskTC,
@@ -29,9 +29,7 @@ type Props = {
 }
 
 export const TodolistsList: React.FC<Props> = ({ demo = false }) => {
-  const todolists = useSelector<AppRootState, Array<TodolistDomain>>(
-    (state) => state.todolists
-  )
+  const todolists = useSelector(selectTodolists)
   const tasks = useSelector<AppRootState, TasksState>((state) => state.tasks)
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
