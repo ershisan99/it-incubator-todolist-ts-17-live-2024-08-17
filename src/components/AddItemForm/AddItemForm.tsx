@@ -2,7 +2,7 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { IconButton, TextField } from '@mui/material'
 import { AddBox } from '@mui/icons-material'
 
-type AddItemFormPropsType = {
+type AddItemFormProps = {
   addItem: (title: string) => void
   disabled?: boolean
 }
@@ -10,7 +10,7 @@ type AddItemFormPropsType = {
 export const AddItemForm = React.memo(function ({
   addItem,
   disabled = false,
-}: AddItemFormPropsType) {
+}: AddItemFormProps) {
   let [title, setTitle] = useState('')
   let [error, setError] = useState<string | null>(null)
 

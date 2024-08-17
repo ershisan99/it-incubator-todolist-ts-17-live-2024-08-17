@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { authAPI, LoginParamsType } from 'api/todolists-api'
+import { authAPI, LoginParams } from 'api/todolists-api'
 import { setAppStatus } from 'app/app-reducer'
 import {
   handleServerAppError,
@@ -7,11 +7,11 @@ import {
 } from 'utils/error-utils'
 import { AppThunk } from 'app/store'
 
-type InitialStateType = {
+type InitialState = {
   isLoggedIn: boolean
 }
 
-const initialState: InitialStateType = {
+const initialState: InitialState = {
   isLoggedIn: false,
 }
 
@@ -31,7 +31,7 @@ export const { setIsLoggedIn } = authSlice.actions
 
 // thunks
 export const loginTC =
-  (data: LoginParamsType): AppThunk =>
+  (data: LoginParams): AppThunk =>
   (dispatch) => {
     dispatch(setAppStatus('loading'))
     authAPI

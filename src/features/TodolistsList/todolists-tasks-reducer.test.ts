@@ -1,16 +1,16 @@
 import {
   addTodolist,
-  TodolistDomainType,
+  TodolistDomain,
   todolistsReducer,
 } from './todolists-reducer'
-import { tasksReducer, TasksStateType } from './tasks-reducer'
-import { TodolistType } from 'api/todolists-api'
+import { tasksReducer, TasksState } from './tasks-reducer'
+import { Todolist } from 'api/todolists-api'
 
 test('ids should be equals', () => {
-  const startTasksState: TasksStateType = {}
-  const startTodolistsState: Array<TodolistDomainType> = []
+  const startTasksState: TasksState = {}
+  const startTodolistsState: Array<TodolistDomain> = []
 
-  let todolist: TodolistType = {
+  let todolist: Todolist = {
     title: 'new todolist',
     id: 'any id',
     addedDate: '',

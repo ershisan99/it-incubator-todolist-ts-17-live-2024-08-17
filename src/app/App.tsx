@@ -3,8 +3,8 @@ import './App.css'
 import { TodolistsList } from 'features/TodolistsList/TodolistsList'
 import { ErrorSnackbar } from 'components/ErrorSnackbar/ErrorSnackbar'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppRootStateType } from './store'
-import { initializeAppTC, RequestStatusType } from './app-reducer'
+import { AppRootState } from './store'
+import { initializeAppTC, RequestStatus } from './app-reducer'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Login } from 'features/Login/Login'
 import { logoutTC } from 'features/Login/auth-reducer'
@@ -20,18 +20,18 @@ import {
 } from '@mui/material'
 import { Menu } from '@mui/icons-material'
 
-type PropsType = {
+type Props = {
   demo?: boolean
 }
 
-function App({ demo = false }: PropsType) {
-  const status = useSelector<AppRootStateType, RequestStatusType>(
+function App({ demo = false }: Props) {
+  const status = useSelector<AppRootState, RequestStatus>(
     (state) => state.app.status
   )
-  const isInitialized = useSelector<AppRootStateType, boolean>(
+  const isInitialized = useSelector<AppRootState, boolean>(
     (state) => state.app.isInitialized
   )
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(
+  const isLoggedIn = useSelector<AppRootState, boolean>(
     (state) => state.auth.isLoggedIn
   )
   const dispatch = useDispatch<any>()

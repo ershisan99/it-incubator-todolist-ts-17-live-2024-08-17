@@ -1,9 +1,9 @@
 import {
   TaskPriorities,
   TaskStatuses,
-  TaskType,
+  TaskEntity,
   todolistsAPI,
-  UpdateTaskModelType,
+  UpdateTaskModel,
 } from 'api/todolists-api'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
@@ -11,14 +11,14 @@ import {
   removeTodolist,
   setTodolists,
 } from 'features/TodolistsList/todolists-reducer'
-import { AppRootStateType, AppThunk } from 'app/store'
+import { AppRootState, AppThunk } from 'app/store'
 import { setAppStatus } from 'app/app-reducer'
 import {
   handleServerAppError,
   handleServerNetworkError,
 } from 'utils/error-utils'
 
-export type UpdateDomainTaskModelType = {
+export type UpdateDomainTaskModel = {
   title?: string
   description?: string
   status?: TaskStatuses
@@ -27,11 +27,11 @@ export type UpdateDomainTaskModelType = {
   deadline?: string
 }
 
-export type TasksStateType = {
-  [key: string]: Array<TaskType>
+export type TasksState = {
+  [key: string]: Array<TaskEntity>
 }
 
-const initialState: TasksStateType = {}
+const initialState: TasksState = {}
 
 const tasksSlice = createSlice({
   name: 'tasks',
@@ -51,7 +51,7 @@ const tasksSlice = createSlice({
         ),
       }
     },
-    addTask(state, action: PayloadAction<TaskType>) {
+    addTask(state, action: PayloadAction<TaskEntity>) {
       return {
         ...state,
         [action.payload.todoListId]: [
@@ -64,7 +64,7 @@ const tasksSlice = createSlice({
       state,
       action: PayloadAction<{
         taskId: string
-        model: UpdateDomainTaskModelType
+        model: UpdateDomainTaskModel
         todolistId: string
       }>
     ) {
@@ -81,7 +81,7 @@ const tasksSlice = createSlice({
     setTasks(
       state,
       action: PayloadAction<{
-        tasks: Array<TaskType>
+        tasks: Array<TaskEntity>
         todolistId: string
       }>
     ) {
@@ -156,10 +156,10 @@ export const addTaskTC =
 export const updateTaskTC =
   (
     taskId: string,
-    domainModel: UpdateDomainTaskModelType,
+    domainModel: UpdateDomainTaskModel,
     todolistId: string
   ): AppThunk =>
-  (dispatch, getState: () => AppRootStateType) => {
+  (dispatch, getState: () => AppRootState) => {
     const state = getState()
     const task = state.tasks[todolistId].find((t) => t.id === taskId)
     if (!task) {
@@ -168,7 +168,7 @@ export const updateTaskTC =
       return
     }
 
-    const apiModel: UpdateTaskModelType = {
+    const apiModel: UpdateTaskModel = {
       deadline: task.deadline,
       description: task.description,
       priority: task.priority,

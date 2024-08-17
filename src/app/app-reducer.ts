@@ -3,18 +3,18 @@ import { authAPI } from 'api/todolists-api'
 import { setIsLoggedIn } from 'features/Login/auth-reducer'
 import { AppThunk } from 'app/store'
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-export type InitialStateType = {
+export type InitialState = {
   // происходит ли сейчас взаимодействие с сервером
-  status: RequestStatusType
+  status: RequestStatus
   // если ошибка какая-то глобальная произойдёт - мы запишем текст ошибки сюда
   error: string | null
   // true когда приложение проинициализировалось (проверили юзера, настройки получили и т.д.)
   isInitialized: boolean
 }
 
-const initialState: InitialStateType = {
+const initialState: InitialState = {
   status: 'idle',
   error: null,
   isInitialized: false,
@@ -27,7 +27,7 @@ const appSlice = createSlice({
     setAppError(state, action: PayloadAction<string | null>) {
       return { ...state, error: action.payload }
     },
-    setAppStatus(state, action: PayloadAction<RequestStatusType>) {
+    setAppStatus(state, action: PayloadAction<RequestStatus>) {
       return { ...state, status: action.payload }
     },
     setAppInitialized(state, action: PayloadAction<boolean>) {

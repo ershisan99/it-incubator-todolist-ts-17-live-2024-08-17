@@ -3,19 +3,19 @@ import {
   changeTodolistEntityStatus,
   changeTodolistFilter,
   changeTodolistTitle,
-  FilterValuesType,
+  FilterValues,
   removeTodolist,
   setTodolists,
-  TodolistDomainType,
+  TodolistDomain,
   todolistsReducer,
 } from './todolists-reducer'
 import { v1 } from 'uuid'
-import { TodolistType } from 'api/todolists-api'
-import { RequestStatusType } from 'app/app-reducer'
+import { Todolist } from 'api/todolists-api'
+import { RequestStatus } from 'app/app-reducer'
 
 let todolistId1: string
 let todolistId2: string
-let startState: Array<TodolistDomainType> = []
+let startState: Array<TodolistDomain> = []
 
 beforeEach(() => {
   todolistId1 = v1()
@@ -48,7 +48,7 @@ test('correct todolist should be removed', () => {
 })
 
 test('correct todolist should be added', () => {
-  let todolist: TodolistType = {
+  let todolist: Todolist = {
     title: 'New Todolist',
     id: 'any id',
     addedDate: '',
@@ -77,7 +77,7 @@ test('correct todolist should change its name', () => {
 })
 
 test('correct filter of todolist should be changed', () => {
-  let newFilter: FilterValuesType = 'completed'
+  let newFilter: FilterValues = 'completed'
 
   const action = changeTodolistFilter({ id: todolistId2, filter: newFilter })
 
@@ -94,7 +94,7 @@ test('todolists should be added', () => {
   expect(endState.length).toBe(2)
 })
 test('correct entity status of todolist should be changed', () => {
-  let newStatus: RequestStatusType = 'loading'
+  let newStatus: RequestStatus = 'loading'
 
   const action = changeTodolistEntityStatus({
     id: todolistId2,

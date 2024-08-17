@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { todolistsAPI, TodolistType } from 'api/todolists-api'
-import { RequestStatusType, setAppStatus } from 'app/app-reducer'
+import { todolistsAPI, Todolist } from 'api/todolists-api'
+import { RequestStatus, setAppStatus } from 'app/app-reducer'
 import { AppThunk } from 'app/store'
 import { handleServerNetworkError } from 'utils/error-utils'
 
-export type FilterValuesType = 'all' | 'active' | 'completed'
-export type TodolistDomainType = TodolistType & {
-  filter: FilterValuesType
-  entityStatus: RequestStatusType
+export type FilterValues = 'all' | 'active' | 'completed'
+export type TodolistDomain = Todolist & {
+  filter: FilterValues
+  entityStatus: RequestStatus
 }
 
-const initialState: Array<TodolistDomainType> = []
+const initialState: Array<TodolistDomain> = []
 
 const todolistsSlice = createSlice({
   name: 'todolists',
@@ -19,7 +19,7 @@ const todolistsSlice = createSlice({
     removeTodolist(state, action: PayloadAction<string>) {
       return state.filter((tl) => tl.id != action.payload)
     },
-    addTodolist(state, action: PayloadAction<TodolistType>) {
+    addTodolist(state, action: PayloadAction<Todolist>) {
       return [
         { ...action.payload, filter: 'all', entityStatus: 'idle' },
         ...state,
@@ -42,7 +42,7 @@ const todolistsSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string
-        filter: FilterValuesType
+        filter: FilterValues
       }>
     ) {
       return state.map((tl) =>
@@ -55,7 +55,7 @@ const todolistsSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string
-        status: RequestStatusType
+        status: RequestStatus
       }>
     ) {
       return state.map((tl) =>
@@ -64,7 +64,7 @@ const todolistsSlice = createSlice({
           : tl
       )
     },
-    setTodolists(state, action: PayloadAction<Array<TodolistType>>) {
+    setTodolists(state, action: PayloadAction<Array<Todolist>>) {
       return action.payload.map((tl) => ({
         ...tl,
         filter: 'all',
