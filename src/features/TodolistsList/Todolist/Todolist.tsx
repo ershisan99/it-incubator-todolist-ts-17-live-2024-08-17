@@ -104,7 +104,7 @@ export const Todolist = React.memo(function ({
         disabled={props.todolist.entityStatus === 'loading'}
       />
       <div>
-        {tasksForTodolist.map((t) => (
+        {tasksForTodolist?.map((t) => (
           <Task
             key={t.id}
             task={t}
