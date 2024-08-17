@@ -50,24 +50,43 @@ export const todolistsReducer = (
 // actions
 export const removeTodolistAC = (id: string) =>
   ({ type: 'REMOVE-TODOLIST', id }) as const
+
 export const addTodolistAC = (todolist: TodolistType) =>
   ({ type: 'ADD-TODOLIST', todolist }) as const
-export const changeTodolistTitleAC = (id: string, title: string) =>
+
+export const changeTodolistTitleAC = ({
+  id,
+  title,
+}: {
+  id: string
+  title: string
+}) =>
   ({
     type: 'CHANGE-TODOLIST-TITLE',
     id,
     title,
   }) as const
-export const changeTodolistFilterAC = (id: string, filter: FilterValuesType) =>
+
+export const changeTodolistFilterAC = ({
+  id,
+  filter,
+}: {
+  id: string
+  filter: FilterValuesType
+}) =>
   ({
     type: 'CHANGE-TODOLIST-FILTER',
     id,
     filter,
   }) as const
-export const changeTodolistEntityStatusAC = (
-  id: string,
+
+export const changeTodolistEntityStatusAC = ({
+  id,
+  status,
+}: {
+  id: string
   status: RequestStatusType
-) =>
+}) =>
   ({
     type: 'CHANGE-TODOLIST-ENTITY-STATUS',
     id,
@@ -96,7 +115,9 @@ export const removeTodolistTC = (todolistId: string) => {
     //изменим глобальный статус приложения, чтобы вверху полоса побежала
     dispatch(setAppStatusAC('loading'))
     //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
-    dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
+    dispatch(
+      changeTodolistEntityStatusAC({ id: todolistId, status: 'loading' })
+    )
     todolistsAPI.deleteTodolist(todolistId).then((res) => {
       dispatch(removeTodolistAC(todolistId))
       //скажем глобально приложению, что асинхронная операция завершена
@@ -116,7 +137,7 @@ export const addTodolistTC = (title: string) => {
 export const changeTodolistTitleTC = (id: string, title: string) => {
   return (dispatch: Dispatch<ActionsType>) => {
     todolistsAPI.updateTodolist(id, title).then((res) => {
-      dispatch(changeTodolistTitleAC(id, title))
+      dispatch(changeTodolistTitleAC({ id: id, title: title }))
     })
   }
 }
