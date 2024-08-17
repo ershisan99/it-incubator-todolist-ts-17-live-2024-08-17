@@ -17,13 +17,11 @@ const todolistsSlice = createSlice({
   initialState,
   reducers: {
     removeTodolist(state, action: PayloadAction<string>) {
-      return state.filter((tl) => tl.id != action.payload)
+      const index = state.findIndex((todo) => todo.id === action.payload)
+      if (index !== -1) state.splice(index, 1)
     },
     addTodolist(state, action: PayloadAction<Todolist>) {
-      return [
-        { ...action.payload, filter: 'all', entityStatus: 'idle' },
-        ...state,
-      ]
+      state.unshift({ ...action.payload, filter: 'all', entityStatus: 'idle' })
     },
     changeTodolistTitle(
       state,
@@ -32,11 +30,8 @@ const todolistsSlice = createSlice({
         title: string
       }>
     ) {
-      return state.map((tl) =>
-        tl.id === action.payload.id
-          ? { ...tl, title: action.payload.title }
-          : tl
-      )
+      const index = state.findIndex((todo) => todo.id === action.payload.id)
+      if (index !== -1) state[index].title = action.payload.title
     },
     changeTodolistFilter(
       state,
@@ -45,11 +40,8 @@ const todolistsSlice = createSlice({
         filter: FilterValues
       }>
     ) {
-      return state.map((tl) =>
-        tl.id === action.payload.id
-          ? { ...tl, filter: action.payload.filter }
-          : tl
-      )
+      const index = state.findIndex((todo) => todo.id === action.payload.id)
+      if (index !== -1) state[index].filter = action.payload.filter
     },
     changeTodolistEntityStatus(
       state,
@@ -58,13 +50,10 @@ const todolistsSlice = createSlice({
         status: RequestStatus
       }>
     ) {
-      return state.map((tl) =>
-        tl.id === action.payload.id
-          ? { ...tl, entityStatus: action.payload.status }
-          : tl
-      )
+      const index = state.findIndex((todo) => todo.id === action.payload.id)
+      if (index !== -1) state[index].entityStatus = action.payload.status
     },
-    setTodolists(state, action: PayloadAction<Array<Todolist>>) {
+    setTodolists(_state, action: PayloadAction<Array<Todolist>>) {
       return action.payload.map((tl) => ({
         ...tl,
         filter: 'all',
