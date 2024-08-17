@@ -2,11 +2,11 @@ import {
   addTask,
   removeTask,
   setTasks,
-  tasksReducer,
+  tasksSlice,
   TasksState,
   updateTask,
 } from './tasks-reducer'
-
+const tasksReducer = tasksSlice.reducer
 import { addTodolist, removeTodolist, setTodolists } from './todolists-reducer'
 import { TaskPriorities, TaskStatuses } from 'api/todolists-api'
 

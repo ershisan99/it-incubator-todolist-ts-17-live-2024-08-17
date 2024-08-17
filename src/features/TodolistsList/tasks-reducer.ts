@@ -33,7 +33,7 @@ export type TasksState = {
 
 const initialState: TasksState = {}
 
-const tasksSlice = createSlice({
+export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
@@ -91,8 +91,6 @@ const tasksSlice = createSlice({
       })
   },
 })
-
-export const tasksReducer = tasksSlice.reducer
 
 export const { removeTask, setTasks, updateTask, addTask } = tasksSlice.actions
 

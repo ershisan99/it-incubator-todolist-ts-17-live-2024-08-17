@@ -12,7 +12,7 @@ export type TodolistDomain = Todolist & {
 
 const initialState: Array<TodolistDomain> = []
 
-const todolistsSlice = createSlice({
+export const todolistsSlice = createSlice({
   name: 'todolists',
   initialState,
   reducers: {
@@ -71,8 +71,6 @@ export const {
   removeTodolist,
   setTodolists,
 } = todolistsSlice.actions
-
-export const todolistsReducer = todolistsSlice.reducer
 
 export const fetchTodolistsTC = (): AppThunk => {
   return (dispatch) => {

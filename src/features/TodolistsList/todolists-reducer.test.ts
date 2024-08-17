@@ -3,11 +3,11 @@ import {
   changeTodolistEntityStatus,
   changeTodolistFilter,
   changeTodolistTitle,
+  todolistsSlice,
   FilterValues,
   removeTodolist,
   setTodolists,
   TodolistDomain,
-  todolistsReducer,
 } from './todolists-reducer'
 import { v1 } from 'uuid'
 import { Todolist } from 'api/todolists-api'
@@ -16,6 +16,7 @@ import { RequestStatus } from 'app/app-reducer'
 let todolistId1: string
 let todolistId2: string
 let startState: Array<TodolistDomain> = []
+const todolistsReducer = todolistsSlice.reducer
 
 beforeEach(() => {
   todolistId1 = v1()
