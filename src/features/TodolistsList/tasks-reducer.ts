@@ -90,10 +90,13 @@ export const tasksSlice = createSlice({
         })
       })
   },
+  selectors: {
+    selectTasks: (state) => state,
+  },
 })
 
 export const { removeTask, setTasks, updateTask, addTask } = tasksSlice.actions
-
+export const { selectTasks } = tasksSlice.selectors
 export const fetchTasksTC =
   (todolistId: string): AppThunk =>
   (dispatch) => {

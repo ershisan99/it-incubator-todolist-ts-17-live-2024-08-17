@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { AppRootState } from 'app/store'
 import {
   addTodolistTC,
   changeTodolistFilter,
@@ -13,6 +12,7 @@ import {
 import {
   addTaskTC,
   removeTaskTC,
+  selectTasks,
   TasksState,
   updateTaskTC,
 } from './tasks-reducer'
@@ -30,7 +30,7 @@ type Props = {
 
 export const TodolistsList: React.FC<Props> = ({ demo = false }) => {
   const todolists = useSelector(selectTodolists)
-  const tasks = useSelector<AppRootState, TasksState>((state) => state.tasks)
+  const tasks = useSelector(selectTasks)
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const dispatch = useAppDispatch()
