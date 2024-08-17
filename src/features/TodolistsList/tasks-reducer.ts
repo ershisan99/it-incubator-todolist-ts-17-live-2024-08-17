@@ -72,17 +72,34 @@ export const tasksReducer = (
 }
 
 // actions
-export const removeTaskAC = (taskId: string, todolistId: string) =>
-  ({ type: 'REMOVE-TASK', taskId, todolistId }) as const
+export const removeTaskAC = ({
+  taskId,
+  todolistId,
+}: {
+  taskId: string
+  todolistId: string
+}) => ({ type: 'REMOVE-TASK', taskId, todolistId }) as const
+
 export const addTaskAC = (task: TaskType) =>
   ({ type: 'ADD-TASK', task }) as const
-export const updateTaskAC = (
-  taskId: string,
-  model: UpdateDomainTaskModelType,
+
+export const updateTaskAC = ({
+  taskId,
+  model,
+  todolistId,
+}: {
+  taskId: string
+  model: UpdateDomainTaskModelType
   todolistId: string
-) => ({ type: 'UPDATE-TASK', model, todolistId, taskId }) as const
-export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
-  ({ type: 'SET-TASKS', tasks, todolistId }) as const
+}) => ({ type: 'UPDATE-TASK', model, todolistId, taskId }) as const
+
+export const setTasksAC = ({
+  tasks,
+  todolistId,
+}: {
+  tasks: Array<TaskType>
+  todolistId: string
+}) => ({ type: 'SET-TASKS', tasks, todolistId }) as const
 
 // thunks
 export const fetchTasksTC =
@@ -91,17 +108,19 @@ export const fetchTasksTC =
     dispatch(setAppStatusAC('loading'))
     todolistsAPI.getTasks(todolistId).then((res) => {
       const tasks = res.data.items
-      dispatch(setTasksAC(tasks, todolistId))
+      dispatch(setTasksAC({ tasks: tasks, todolistId: todolistId }))
       dispatch(setAppStatusAC('succeeded'))
     })
   }
+
 export const removeTaskTC =
   (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistsAPI.deleteTask(todolistId, taskId).then((res) => {
-      const action = removeTaskAC(taskId, todolistId)
+      const action = removeTaskAC({ taskId: taskId, todolistId: todolistId })
       dispatch(action)
     })
   }
+
 export const addTaskTC =
   (title: string, todolistId: string) =>
   (
@@ -126,6 +145,7 @@ export const addTaskTC =
         handleServerNetworkError(error, dispatch)
       })
   }
+
 export const updateTaskTC =
   (
     taskId: string,
@@ -155,7 +175,11 @@ export const updateTaskTC =
       .updateTask(todolistId, taskId, apiModel)
       .then((res) => {
         if (res.data.resultCode === 0) {
-          const action = updateTaskAC(taskId, domainModel, todolistId)
+          const action = updateTaskAC({
+            taskId: taskId,
+            model: domainModel,
+            todolistId: todolistId,
+          })
           dispatch(action)
         } else {
           handleServerAppError(res.data, dispatch)
