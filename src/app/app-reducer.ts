@@ -25,13 +25,13 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     setAppError(state, action: PayloadAction<string | null>) {
-      return { ...state, error: action.payload }
+      state.error = action.payload
     },
     setAppStatus(state, action: PayloadAction<RequestStatus>) {
-      return { ...state, status: action.payload }
+      state.status = action.payload
     },
     setAppInitialized(state, action: PayloadAction<boolean>) {
-      return { ...state, isInitialized: action.payload }
+      state.isInitialized = action.payload
     },
   },
 })
