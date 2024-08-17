@@ -27,9 +27,7 @@ export type UpdateDomainTaskModel = {
   deadline?: string
 }
 
-export type TasksState = {
-  [key: string]: Array<TaskEntity>
-}
+export type TasksState = Record<string, Array<TaskEntity>>
 
 const initialState: TasksState = {}
 

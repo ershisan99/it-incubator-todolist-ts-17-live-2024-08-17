@@ -31,7 +31,7 @@ export const AddItemForm = React.memo(function ({
     if (error !== null) {
       setError(null)
     }
-    if (e.charCode === 13) {
+    if (e.key === 'Enter') {
       addItemHandler()
     }
   }
@@ -44,7 +44,7 @@ export const AddItemForm = React.memo(function ({
         error={!!error}
         value={title}
         onChange={onChangeHandler}
-        onKeyPress={onKeyPressHandler}
+        onKeyDown={onKeyPressHandler}
         label='Title'
         helperText={error}
       />

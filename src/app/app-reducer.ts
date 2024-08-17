@@ -5,16 +5,22 @@ import { AppThunk } from 'app/store'
 
 export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-export type InitialState = {
-  // происходит ли сейчас взаимодействие с сервером
+export type AppInitialState = {
+  /**
+   * происходит ли сейчас взаимодействие с сервером
+   */
   status: RequestStatus
-  // если ошибка какая-то глобальная произойдёт - мы запишем текст ошибки сюда
+  /**
+   * если ошибка какая-то глобальная произойдёт - мы запишем текст ошибки сюда
+   */
   error: string | null
-  // true когда приложение проинициализировалось (проверили юзера, настройки получили и т.д.)
+  /**
+   * true когда приложение проинициализировалось (проверили юзера, настройки получили и т.д.)
+   */
   isInitialized: boolean
 }
 
-const initialState: InitialState = {
+const initialState: AppInitialState = {
   status: 'idle',
   error: null,
   isInitialized: false,
@@ -23,17 +29,23 @@ const initialState: InitialState = {
 export const appSlice = createSlice({
   name: 'app',
   initialState,
-  reducers: {
-    setAppError(state, action: PayloadAction<string | null>) {
+  reducers: (builder) => ({
+    // setAppError(state, action: PayloadAction<AppInitialState['error']>) {
+    //   state.error = action.payload
+    // },
+    setAppError: builder.reducer<AppInitialState['error']>((state, action) => {
       state.error = action.payload
-    },
+    }),
     setAppStatus(state, action: PayloadAction<RequestStatus>) {
       state.status = action.payload
     },
-    setAppInitialized(state, action: PayloadAction<boolean>) {
+    setAppInitialized(
+      state,
+      action: PayloadAction<AppInitialState['isInitialized']>
+    ) {
       state.isInitialized = action.payload
     },
-  },
+  }),
   selectors: {
     selectAppError: (state) => state.error,
     selectAppStatus: (state) => state.status,
